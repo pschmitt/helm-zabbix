@@ -9,6 +9,10 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.zabbixServer.service.annotations }}
+  annotations:
+{{ toYaml .Values.zabbixServer.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.zabbixServer.service.type }}
   ports:
@@ -32,6 +36,10 @@ metadata:
     helm.sh/chart: {{ include "zabbix.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}-agent
     app.kubernetes.io/managed-by: {{ .Release.Service }}-agent
+{{- if .Values.zabbixagent.service.annotations }}
+  annotations:
+{{ toYaml .Values.zabbixagent.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.zabbixagent.service.type }}
   ports:
@@ -54,6 +62,10 @@ metadata:
       helm.sh/chart: {{ include "zabbix.chart" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}-web
       app.kubernetes.io/managed-by: {{ .Release.Service }}-web
+{{- if .Values.zabbixweb.service.annotations }}
+  annotations:
+{{ toYaml .Values.zabbixweb.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.zabbixweb.service.type }}
   ports:
@@ -75,6 +87,10 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.zabbixproxy.service.annotations }}
+  annotations:
+{{ toYaml .Values.zabbixproxy.service.annotations | indent 4 }}
+{{- end }}
 spec:
   ports:
     - port: {{ .Values.zabbixproxy.service.port }}
